@@ -1,0 +1,18 @@
+<h3 style="text-align: center; color: #3E1A6A;">Add Slot</h3>
+<form name="form" (ngSubmit) = "onSubmit()">
+    <label for="shopId" style="font-weight: bold;">Select Shop</label>
+            <select class="form-control"  [(ngModel)]="slotDetails._id" name="shopId" id="shopName">
+                <option *ngFor='let shop of shops' value="{{shop._id}}">{{shop.shopName}}</option>                                  
+            </select>
+
+        <label>
+      <p class="label-txt">Enter Slot</p>
+
+      <input type="text" [(ngModel)] = "slotDetails.slot" name = "service" id = "service" class="input" required = "required" autocomplete="off"> 
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+      </label>
+    <button type="submit">Add</button>
+    <br><br><br><br><br><br><br><br><br>
+  </form>

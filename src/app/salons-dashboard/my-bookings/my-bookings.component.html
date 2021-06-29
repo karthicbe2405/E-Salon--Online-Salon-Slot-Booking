@@ -1,0 +1,29 @@
+<div style="background-color: white;">
+    <div class="container" style="padding: 10px;">
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">BookingId</th>
+            <th scope="col">Email</th>
+            <th scope="col">Shop Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Services</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let booking of book">
+                <td> {{booking._id}}</td>
+                <td>{{booking.userEmail}}</td>
+                <td >{{booking.shopName}}</td>
+                <td>{{booking.date}}</td>
+                <td>{{booking.time}}</td>
+                <td>
+                <p *ngFor="let s of booking.service">{{s}}</p></td>
+                <td>₹ {{booking.totalCost}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

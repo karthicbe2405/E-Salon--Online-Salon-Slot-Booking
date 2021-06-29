@@ -1,0 +1,26 @@
+<div class="login-form" style="background-image: url(assets/bg2.png); background-repeat: no-repeat; background-size:inherit;">
+  <h3 style="text-align: center; color: #3E1A6A; margin-top: 5%;">Admin Login</h3>
+    <form name="form" [formGroup] = "form" (ngSubmit) = "form.valid && onSubmit()">
+      <label>
+        <p class="label-txt">Enter AdminId</p>
+        <input type="text" class="input" formControlName = "adminId" required="required">
+
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+
+      </label>
+
+      <label>
+        <p class="label-txt">Enter Password</p>
+  
+        <input type="password" class="input" formControlName = "adminPassword" required="required">
+        
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+
+      </label>
+      <button type="submit">Login</button>        
+    </form>
+</div>

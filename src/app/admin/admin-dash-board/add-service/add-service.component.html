@@ -1,0 +1,27 @@
+<h3 style="text-align: center; color: #3E1A6A;">Service</h3>
+  <form name="form" (ngSubmit) = "onSubmit()" >
+    <label for="shopId" style="font-weight: bold;">Select Shop</label>
+            <select class="form-control"  [(ngModel)]="serviceDetails._id" name="shopId" id="shopName">
+                <option *ngFor='let shop of shops' value="{{shop._id}}">{{shop.shopName}}</option>                                  
+            </select>
+    <label>
+      <p class="label-txt">Enter Shop Service</p>
+
+      <input type="text" [(ngModel)] = "serviceDetails.serviceName" name = "service" id = "service" class="input" required = "required" autocomplete="off"> 
+      
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+      <p class="label-txt">Enter Service Cost</p>
+
+      <input type="number" [(ngModel)] = "serviceDetails.serviceCost" name = "serviceCost" id = "serviceCost" class="input" required = "required" autocomplete="off">  
+      
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <button type="submit">Add</button>
+    <br><br><br><br><br>
+  </form>

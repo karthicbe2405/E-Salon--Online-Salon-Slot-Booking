@@ -1,0 +1,70 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="forms-container">
+      <div class="signin-signup">
+        <form #registerForm = "ngForm" (ngSubmit) = "register()"class="sign-in-form" autocomplete="off">
+          <h2 class="title">Sign up</h2>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input autocomplete="off" type="text" placeholder="Name" #userName = "ngModel" name = "userName" [(ngModel)] = "user.userName" required/>
+          </div>
+          <small class="text-danger" [class.d-none] = "userName.valid || userName.untouched">Enter a Valid Name</small>
+          <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input autocomplete="off" type="email" placeholder="email" #email = "ngModel" [(ngModel)] = "user.userEmail"  name = "email" pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+          </div>
+          <small class="text-danger" [class.d-none] = "email.valid || email.untouched">Enter a Valid Email</small>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" name="password" #password = "ngModel" [(ngModel)] = "user.userPassword" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$"/>
+          </div>
+          <small class="text-danger" [class.d-none] = " password.valid || password.untouched">It must be of Length 8 containing uppercase,lowercase,number and a symbol</small>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Confirm Password" name="confirmPassword" #confirmPassword = "ngModel" [(ngModel)] = "user.userPassword" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$"/>
+          </div>
+          <small class="text-danger" [class.d-none] = " (confirmPassword === password) || confirmPassword.untouched">Password doesn't match</small>
+          <div class="input-field">
+            <i class="fas fa-mobile"></i>
+            <input autocomplete="off" type="text" placeholder="Mobile" name="mobileNumber" [(ngModel)] = "user.userMobileNum" #mobile = "ngModel" required pattern="[0-9]{10}" required/>
+          </div>
+          <small class="text-danger" [class.d-none] = "mobile.valid || mobile.untouched">Enter a valid Mobile Number</small>
+          <input type="submit" [disabled]="!registerForm.valid" class="btn solid"/>
+          <p class="social-text">Or Sign in with</p>
+          <div class="social-media">
+            <a href="#" class="social-icon">
+              <i class="fab fa-google"></i>
+            </a>
+            <!-- <a href="#" class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-twitter"></i>
+            </a>
+            
+            <a href="#" class="social-icon">
+              <i class="fab fa-linkedin-in"></i>
+            </a> -->
+          </div>
+        </form>
+        
+      </div>
+    </div>
+    
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>One of Us ?</h3>
+          <p>
+            Already have an Account Just Click and enter you Credentials
+          </p>
+          <button class="btn transparent" id="sign-up-btn" routerLink="/login">
+            Sign in
+          </button>
+        </div>
+        <!--<img src="img/log.svg" class="image" alt="" />-->
+      </div>
+      
+    </div>
+    </div>
+    

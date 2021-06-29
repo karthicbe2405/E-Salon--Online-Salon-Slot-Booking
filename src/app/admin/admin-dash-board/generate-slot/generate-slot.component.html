@@ -1,0 +1,12 @@
+<h3 style="text-align: center; color: #3E1A6A;">Generate Slot</h3>
+<form name="form" (ngSubmit) = "onSubmit()">
+    <label for="shopId" style="font-weight: bold;">Select Shop</label>
+            <select class="form-control"  [(ngModel)]="slotDetails.shopId" name="shopId" id="shopName">
+                <option *ngFor='let shop of shops' value="{{shop._id}}">{{shop.shopName}}</option>                                  
+            </select>
+      <label for="date" style="font-weight: bold;">Select Date</label>
+      <input type="date" [(ngModel)] = "slotDetails.date" id="date" name="date" min="{{minDate}}"required="required">
+      <br><br><br>
+    <button type="submit">Add</button>
+    <br><br><br><br><br><br>
+  </form>

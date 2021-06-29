@@ -1,0 +1,91 @@
+<div class="container">
+    <div *ngIf = "!bookingConfirmation">
+    <div class="alert alert-danger" role="alert" style="text-align: center;" *ngIf="popUpMessageStatus">
+        <strong>{{popUpMessage}}</strong>        
+      </div>
+    <div *ngFor="let shop of shops">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img src={{shop.shopImage}} class="rounded float-right" width="100px" height="150px"alt="...">
+                      </div>
+                    <div class="col-sm-6">
+                        <div class="card-body text-left">
+                          <h5 class="card-title">{{shop.shopName}}</h5>
+                          <p class="card-text">{{shop.shopAddress}}</p>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-md-12">
+                        <h4 class="m-2">Select Date</h4>
+                        <div class="row border ">
+                            <div class="col-2 m-1 pt-3 pb-0"  *ngFor="let s of slots" >       
+                                <input type="radio"  class="btn-check" name="date" value = "{{s.date}}" id="{{s._id}}" [(ngModel)]="book.date" autocomplete="off">
+                                <label id = "date" class="btn btn-outline-dark" for="{{s._id}}">{{s.date}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 style="text-align: center;">Select Service</h4>
+                    <div style="text-align: center">
+                        <div class="row border ">
+                            <div class="col-3 m-0 pt-1 pb-2" *ngFor="let service of shop.shopServices"> 
+                                <input type="checkbox" id="{{service._id}}" [(ngModel)]="service.isSelect"  name="{{service.serviceName}}" value="{{service.serviceName}}">
+                                <label id="service" class="btn btn-outline-secondary" for="{{service._id}}">{{service.serviceName}} | ₹ {{service.servicePrice}}</label><br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="text-align: center;">Select Time Slot</h4>
+                    <div *ngFor="let slot of slots">
+                        <div *ngIf = "slot.date == book.date">
+                            <div class="row border">
+                                <div class="col-2 m-1 pt-0 pb-0" *ngFor="let t of slot.slots">
+                                    <div *ngIf="!t.status">
+                                        <input type="radio"  class="btn-check" name="time" value="{{t._id}}" id="{{t._id}}" [(ngModel)]="book.slotId" autocomplete="off">
+                                        <label id = "slot"  class="btn btn-outline-secondary" for="{{t._id}}">{{t.slotId}}</label>
+                                    </div>
+                                    <div *ngIf="t.status">
+                                        <input type="radio" disabled={{t.status}} class="btn-check" name="time" value="{{t._id}}" id="{{t._id}}" [(ngModel)]="book.slotId" autocomplete="off">
+                                        <label id = "slot"  class="btn btn-outline-danger" for="{{t._id}}">{{t.slotId}}</label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" >
+                        <button class="btn btn-outline-success" style="margin-right: 10px;" (click)="onSubmit()">Book</button>
+                        <input class="btn btn-outline-info" type="reset">
+                    </div>
+                    
+            </div>
+          </div>
+        
+    </div>
+</div>
+<div *ngIf = "bookingConfirmation" style="margin-top: 10px;margin-left: 370px;">
+    <div *ngFor="let shop of shops">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{shop.shopImage}}" width="40px" height="200px" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{shop.shopName}}</h5>
+              <p class="card-text">{{shop.shopAddress}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Date  : {{book.date}}</li>
+              <li class="list-group-item">Time : {{book.time}}</li>
+              <li class="list-group-item">Service : 
+                  <p style="text-align: center;" *ngFor="let service of book.service">
+                {{service}}
+            </p></li>
+            <li class="list-group-item">Total Cost : ₹ {{book.totalCost}}</li>
+            </ul>
+            <div class="card-body">
+                <button style="margin-left: 30px;" class="btn btn-outline-success" (click) = "confirmBooking()">Confirm</button>
+                <button style="margin-left: 35px;" class="btn btn-outline-danger" (click) = "cancelBooking()">Cancel</button>
+            </div>
+          </div>
+    </div>
+</div>
+</div>

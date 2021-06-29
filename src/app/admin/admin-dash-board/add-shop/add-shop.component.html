@@ -1,0 +1,26 @@
+<h3 style="text-align: center; color: #3E1A6A;">Shop</h3>
+<form name="form" [formGroup] = "form" (ngSubmit) = "form.valid && onSubmit()">
+    <label>
+      <p class="label-txt">Enter Shop Name</p>
+      <input type="text" class="input" formControlName = "shopName" required="required">
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+      <p class="label-txt">Enter Shop Address</p>
+      <input type="text" formControlName = "shopAddress" class="input" required = "required"> 
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+        <p class="label-txt">Enter Shop Image URL</p>
+        <input type="text" formControlName = "shopImage" class="input" required = "required"> 
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+    <button type="submit">Add</button>
+    <br><br><br><br><br><br><br>
+  </form>

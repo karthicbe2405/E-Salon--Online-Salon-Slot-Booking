@@ -1,0 +1,53 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="forms-container">
+      <div class="signin-signup">
+        <form #loginForm = "ngForm" class="sign-in-form" (ngSubmit) = "login()">
+          <h2 class="title">Sign in</h2>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input autocomplete="off" type="email" placeholder="Username" [(ngModel)] = "user.userEmail" name = "userName" #username = "ngModel" [class.is-invalid] = "username.touched" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+          </div>
+          <small class="text-danger" [class.d-none] = " username.valid || username.untouched">Valid Email Required</small>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" [(ngModel)] = "user.userPassword" name="password" #password = "ngModel" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$" />
+          </div>
+          <small class="text-danger" [class.d-none] = " password.valid || password.untouched">It must be of Length 8 containing uppercase,lowercase,number and a symbol</small>
+          <input type="submit" value="Login" [disabled] = "!loginForm.valid" class="btn solid" />
+          <p class="social-text">Or Sign in with</p>
+          <div class="social-media">
+            <a href="#" class="social-icon">
+              <i class="fab fa-google"></i>
+            </a>
+            <!--<a href="#" class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-linkedin-in"></i>
+            </a>-->
+          </div>
+        </form>
+        
+      </div>
+    </div>
+    
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>New here ?</h3>
+          <p>
+            Nothing to worry , Just Click Below to Create an Account
+          </p>
+          <button class="btn transparent" id="sign-up-btn" routerLink="/signup">
+            Sign up
+          </button>
+        </div>
+       <!-- <img src="img/log.svg" class="image" alt="" /> -->
+      </div>
+    </div>
+    </div>
+    
