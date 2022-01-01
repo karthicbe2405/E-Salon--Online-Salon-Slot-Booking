@@ -6,7 +6,6 @@ const Slot=require('../Models/Slot');
 const SlotAvailability=require('../Models/SlotAvailability');
 const route =express.Router();
 const booking=require('../Models/Bookings');
-
 route.post('/adminLogin',async(req,res)=>{
     try{
         const admin=await Admin.findOne({

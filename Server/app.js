@@ -1,9 +1,12 @@
 const express=require('express');
 let bodyParser = require('body-parser');
+
 const app=express();
-const User=require('./Controllers/User');
-const Admin=require('./Controllers/Admin')
-const mongoose=require('./db')
+
+const User=require('./app/routes/userRoutes');
+const Admin=require('./app/routes/adminRoutes');
+
+const mongoose=require('./app/utils/db')
 var cors = require('cors')
 app.use(cors({origin : 'http://localhost:4200'}));
 app.use(express.json({extended:false}))
