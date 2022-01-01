@@ -11,7 +11,7 @@
     "parser": "^0.1.4"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon app.js"
   },
   "name": "saloon_server",
   "version": "1.0.0",
