@@ -38,42 +38,42 @@ route.post('/login', async (req, res) => {
 
     }
 });
-route.get('/getShops',(req,res)=>{
+// route.get('/getShops',(req,res)=>{
     
-    Shop.find({},(err,result)=>{
-        if(err){
-            res.send(err)
-        }
-        res.send(result);
-    })
-})
-route.post('/getShop',(req,res)=>{
-    Shop.find({
-        _id:req.body.shopId,
-    },(err,result)=>{
-        if(err){
-            console.log(err);
-        }
-        else{
-            console.log("Printing the shop : " +result);
-            res.send(result);
-        }
-    })
-})
-route.post('/getSlots',(req,res)=>{
-    console.log(req.body.shopId);
-    SlotAvailability.find({
-        shopId:req.body.shopId,
-    },(err,result)=>{
-        if(err){
-            console.log(err);
-        }
-        else{
-            console.log(result);
-            res.send(result);
-        }
-    })
-})
+//     Shop.find({},(err,result)=>{
+//         if(err){
+//             res.send(err)
+//         }
+//         res.send(result);
+//     })
+// })
+// route.post('/getShop',(req,res)=>{
+//     Shop.find({
+//         _id:req.body.shopId,
+//     },(err,result)=>{
+//         if(err){
+//             console.log(err);
+//         }
+//         else{
+//             console.log("Printing the shop : " +result);
+//             res.send(result);
+//         }
+//     })
+// })
+// route.post('/getSlots',(req,res)=>{
+//     console.log(req.body.shopId);
+//     SlotAvailability.find({
+//         shopId:req.body.shopId,
+//     },(err,result)=>{
+//         if(err){
+//             console.log(err);
+//         }
+//         else{
+//             console.log(result);
+//             res.send(result);
+//         }
+//     })
+// })
 
 route.post('/bookSlot',async(req,res)=>{
     const booking={};
@@ -134,37 +134,37 @@ route.post('/bookSlot',async(req,res)=>{
     }
 })
 
-route.post('/bookSlot',async(req,res)=>{
-    const booking={};
-    booking.shopId=req.body.shopId;
-    booking.userEmail=req.body.userEmail;
-    booking.shopName=req.body.shopName;
-    booking.date=req.body.date;
-    booking.slotId=req.body.slotId;
-    booking.time=req.body.time;
-    booking.totalCost=req.body.totalCost;
-    booking.service=req.body.service;
-    let bookModel=new Booking(booking);
-    await bookModel.save();
-    try{
-        var book=await SlotAvailability.findOne({shopId:booking.shopId,date:booking.date});
+// route.post('/bookSlot',async(req,res)=>{
+//     const booking={};
+//     booking.shopId=req.body.shopId;
+//     booking.userEmail=req.body.userEmail;
+//     booking.shopName=req.body.shopName;
+//     booking.date=req.body.date;
+//     booking.slotId=req.body.slotId;
+//     booking.time=req.body.time;
+//     booking.totalCost=req.body.totalCost;
+//     booking.service=req.body.service;
+//     let bookModel=new Booking(booking);
+//     await bookModel.save();
+//     try{
+//         var book=await SlotAvailability.findOne({shopId:booking.shopId,date:booking.date});
         
-        // book.shopName="amazon";
-        // book.save();
-        if(book){
-            book.slots.forEach(element => {
-                if(element._id == booking.slotId){
-                    console.log(element);
-                    element.status = true;
-                }
-            });
-            book.save();
-        }
-    }catch(err)
-    {
-        res.send(err);
-    }
-})
+//         // book.shopName="amazon";
+//         // book.save();
+//         if(book){
+//             book.slots.forEach(element => {
+//                 if(element._id == booking.slotId){
+//                     console.log(element);
+//                     element.status = true;
+//                 }
+//             });
+//             book.save();
+//         }
+//     }catch(err)
+//     {
+//         res.send(err);
+//     }
+// })
 
 route.post('/getBookingByEmail',(req,res)=>{
     
