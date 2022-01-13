@@ -1,8 +1,7 @@
 const mongoose=require('mongoose');
-const User=require('../Models/User');
-const user=require('../models/User');
+const User=require('../../Models/User');
 const bcrypt=require('bcrypt');
-const Booking = require('../Models/Bookings');
+const Booking = require('../../Models/Bookings');
 const nodemailer=require('nodemailer');
 
 class UserService{
@@ -72,7 +71,7 @@ class UserService{
         })
     }
 
-    bookSlot(req,res) {
+    async bookSlot(req,res) {
             const booking={};
             booking.shopId=req.body.shopId;
             booking.userEmail=req.body.userEmail;

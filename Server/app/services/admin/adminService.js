@@ -1,13 +1,12 @@
-const { db } = require('../Models/Admin');
-const Admin=require('../Models/Admin');
-const Shop =require('../Models/Shop');
-const Slot=require('../Models/Slot');
-const SlotAvailability=require('../Models/SlotAvailability');
-const booking=require('../Models/Bookings');
+const Admin=require('../../Models/Admin');
+const Shop =require('../../Models/Shop');
+const Slot=require('../../Models/Slot');
+const SlotAvailability=require('../../Models/SlotAvailability');
+const booking=require('../../Models/Bookings');
 
 class AdminService{
     
-    adminLogin(req,res) {
+    async adminLogin(req,res) {
         try{
             const admin=await Admin.findOne({
                 AdminId:req.body.adminId
