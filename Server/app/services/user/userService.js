@@ -23,7 +23,7 @@ class UserService{
             User.findOne({userEmail: req.body.userEmail})
             .then( data => {
                 if (req.body.userPassword != data.userPassword)
-                    return res.status(404).send("Incorrect Password!");
+                    return res.status(404).json({"Message" : "Incorrect Password!"});
                 else
                     return res.status(200).json({"Message":"Login successful"});
             })
