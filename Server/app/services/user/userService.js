@@ -6,6 +6,39 @@ const Booking = require('../Models/Bookings');
 const nodemailer=require('nodemailer');
 
 class UserService{
+
+
+    async signup(req,res){
+        const{userName,userEmail,userPassword,userMobileNum}=req.body;
+        let user={};
+        user.userName=userName;
+        user.userEmail=userEmail;
+        user.userPassword= userPassword;
+        user.userMobileNum= userMobileNum;
+        let userModel =new User(user);
+        await userModel.save();
+        return res.status(200).json({"message":"Signup successful"});
+    }
+    
+    async login(req, res){
+        console.log("Login Attempt");
+        try {
+            const user = await User.findOne({
+                userEmail: req.body.userEmail
+            });
+            if (!user) {
+                return res.status(404).send("Invalid Email!");
+            }
+            if (req.body.userPassword != user.userPassword) {
+                return res.status(404).send("Incorrect Password!");
+            }
+            return res.status(200).json({"message":"Login successful"});
+        }catch (err) {
+            console.log("ERROR:: ", err);
+            return res.status(404).send("Error");
+    
+        }
+    }
     
     getShops(req,res){
         Shop.find({},(err,result)=>{
@@ -65,6 +98,23 @@ class UserService{
             {
                 res.send(err);
             }
+    }
+
+    getBookingByEmail(req,res){
+    
+        console.log(req.body.userEmail);
+    
+    
+        Booking.find({
+            userEmail:req.body.userEmail
+        },(err,result)=>{
+            if(!err){
+                res.status(200).json(result);
+            }
+            else{
+                res.status(404).json(err);
+            }
+        })
     }
 
     sendMail() {
