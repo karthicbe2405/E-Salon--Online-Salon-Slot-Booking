@@ -1,11 +1,5 @@
 const express = require('express');
-const mongoose=require('mongoose');
-const User=require('../Models/User');
-//const user=require('../models/User');
-const bcrypt=require('bcrypt');
 const route=express.Router();
-const Booking = require('../Models/Bookings');
-const nodemailer=require('nodemailer');
 
 route.post('/signup',async(req,res)=>{
     const{userName,userEmail,userPassword,userMobileNum}=req.body;

@@ -1,3 +1,10 @@
+const mongoose=require('mongoose');
+const User=require('../Models/User');
+const user=require('../models/User');
+const bcrypt=require('bcrypt');
+const Booking = require('../Models/Bookings');
+const nodemailer=require('nodemailer');
+
 class UserService{
     
     getShops(req,res){
@@ -85,3 +92,5 @@ class UserService{
 })
     }
 }
+
+module.exports = new UserService();

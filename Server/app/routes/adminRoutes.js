@@ -1,11 +1,5 @@
 const express=require('express');
-const { db } = require('../Models/Admin');
-const Admin=require('../Models/Admin');
-const Shop =require('../Models/Shop');
-const Slot=require('../Models/Slot');
-const SlotAvailability=require('../Models/SlotAvailability');
 const route =express.Router();
-const booking=require('../Models/Bookings');
 route.post('/adminLogin',async(req,res)=>{
     try{
         const admin=await Admin.findOne({
