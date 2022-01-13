@@ -1,5 +1,6 @@
 class AdminService{
-    adminLogin() {
+    
+    adminLogin(req,res) {
         try{
             const admin=await Admin.findOne({
                 AdminId:req.body.adminId
@@ -17,8 +18,9 @@ class AdminService{
         catch(err){
             console.log("Error:",err);
         }
-    });
-    route.post('/addShop',async(req,res)=>{
+    }
+
+    async addShop(req,res){
         const {shopName,shopAddress,shopImage}=req.body;
         const shop={};
         shop.shopName=shopName;
@@ -27,7 +29,7 @@ class AdminService{
         let shopModel=new Shop(shop);
         await shopModel.save();
         res.status(200).json({"message":"Shop Added"});
-    })
+    }
     
     getShops() {
         Shop.find({},(err,result)=>{
@@ -38,7 +40,7 @@ class AdminService{
         })
     }
     
-    route.put('/updateServices',async(req,res)=>{
+     async updateServices(req,res){
         try{
             await Shop.findOneAndUpdate({
                 _id:req.body._id,
@@ -49,9 +51,9 @@ class AdminService{
             console.log(err);
             res.status(404);
         }
-    })
+    }
     
-    route.put('/addSlot',async(req,res)=>{
+    async addSlot(req,res){
         let id=req.body._id;
         let SlotId=req.body.slot;
         console.log(req.body.slot);
@@ -83,8 +85,9 @@ class AdminService{
         catch(err){
             res.status(404);
         }
-    })
-    route.post('/generateSlot',async(req,res)=>{
+    }
+
+    async generateSlot(req,res){
         console.log(req.body.date);
         var date=req.body.date;
         var ShopId=req.body.shopId;
@@ -106,16 +109,16 @@ class AdminService{
             }
             
         }
-    })
+    }
     
-    route.get('/getBooking',(req,res)=>{
+    getBooking(req,res){
         booking.find({},(err,result)=>{
             if(err){
                 res.send(err)
             }
             res.send(result);
-        })
-    })    
+        });
+    }    
 }
 
 module.exports = new AdminService();
