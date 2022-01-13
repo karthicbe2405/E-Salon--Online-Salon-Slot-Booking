@@ -12,4 +12,4 @@ let db = mongoose.connect(mongo_URI,{useNewUrlParser: true, useUnifiedTopology: 
         console.log("DB Connection UnsuccessFull");
     }
 })
-module.exports = mongoose;
+module.exports = db;
