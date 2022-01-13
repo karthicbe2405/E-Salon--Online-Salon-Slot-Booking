@@ -18,7 +18,7 @@ class AdminService{
         .catch( err => { return res.status(404).send("Invalid Id!"); })
     }
 
-    async addShop(req,res){
+    addShop(req,res){
         const {shopName,shopAddress,shopImage}=req.body;
         const shop={};
         shop.shopName=shopName;
@@ -69,8 +69,7 @@ class AdminService{
         .catch( err => {
             let slotModel=new Slot({
                 shopId:id
-            })
-            
+            })   
             slotModel.save()
             .then( data => { 
                 Slot.findOneAndUpdate(
@@ -86,8 +85,7 @@ class AdminService{
                     return res.status(200).json({"Message":"Slot Added"});
                 })  
             })
-            .catch( err => { return res.status(404).json({"Message" : "Operation Failed" });})
-            
+            .catch( err => { return res.status(500).json({"Message" : "Operation Failed" });})
         })
     }
 
@@ -105,7 +103,7 @@ class AdminService{
             .then( data => { return res.status(200).json({"Message":"slot Generated"});})
             
         })
-        .catch( err => { return res.status(404);})
+        .catch( err => { return res.status(500).json({"Message" : "Slot Generation Failed"});})
     }
     
     getBooking(req,res){
