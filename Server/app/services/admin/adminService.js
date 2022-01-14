@@ -92,10 +92,10 @@ class AdminService{
     generateSlot(req,res){
         var date=req.body.date;
         var ShopId=req.body.shopId;
-        Slot.findOne({shopId:ShopId})
+        Slot.findOne({shopId:ShopId,})
         .then( data => {
             let slot = new SlotAvailability({
-                shopId:data.shopId,
+                shopId:ShopId,
                 date:date,
                 slots:data.slots,
             })
@@ -103,7 +103,7 @@ class AdminService{
             .then( data => { return res.status(200).json({"Message":"slot Generated"});})
             
         })
-        .catch( err => { return res.status(500).json({"Message" : "Slot Generation Failed"});})
+        .catch( err => { return res.status(500).json({"Message" : "Slot Generation Failed" + err});})
     }
     
     getBooking(req,res){

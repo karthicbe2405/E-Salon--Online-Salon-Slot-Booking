@@ -48,7 +48,7 @@ class UserService{
 
     getSlots(req,res){
         SlotAvailability.find({shopId:req.body.shopId})
-        .then( data => { return res.status(200).send(result) })
+        .then( data => { return res.status(200).send(data); })
         .catch( err => { return res.status(500).json({"Message" : err.Message}); })
     }
 
