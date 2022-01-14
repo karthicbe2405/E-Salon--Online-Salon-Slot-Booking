@@ -6,124 +6,110 @@ const booking=require('../../Models/Bookings');
 
 class AdminService{
     
-    async adminLogin(req,res) {
-        try{
-            const admin=await Admin.findOne({
-                AdminId:req.body.adminId
-            })
-            if (!admin) {
-                return res.status(404).send("Invalid Id!");
-            }
+    adminLogin(req,res) {
+        Admin.findOne({AdminId:req.body.adminId})
+        .then( data => {
             const password=req.body.adminPassword;
-            if(password == admin.AdminPassword)
-            {
-                return res.status(200).json({"message":"Login successful"});
-            }
-            return res.status(404).send("Incorrect Password!");
-        }
-        catch(err){
-            console.log("Error:",err);
-        }
+            if(password == data.AdminPassword)
+                return res.status(200).json({"Message":"Login successful"});
+            else
+                return res.status(404).json({"Message" : "Incorrect Password!"});
+        })
+        .catch( err => { return res.status(404).send("Invalid Id!"); })
     }
 
-    async addShop(req,res){
+    addShop(req,res){
         const {shopName,shopAddress,shopImage}=req.body;
         const shop={};
         shop.shopName=shopName;
         shop.shopAddress=shopAddress;
         shop.shopImage=shopImage;
         let shopModel=new Shop(shop);
-        await shopModel.save();
-        res.status(200).json({"message":"Shop Added"});
+        shopModel.save()
+        .then( data => {return res.status(200).json({"Message":"Shop Added"}); })
+        .catch ( err => { return res.status(500).json({"Message":"Shop Not Added"}); })
+        
     }
     
-    getShops() {
-        Shop.find({},(err,result)=>{
-            if(err){
-                res.status(404).send(err)
-            }
-            res.send(result);
-        })
+    getShops(req,res) {
+        Shop.find({})
+        .then( data => { return res.status(200).send(data); })
+        .catch ( err => { return res.status(404).send(err); })
     }
     
-     async updateServices(req,res){
-        try{
-            await Shop.findOneAndUpdate({
-                _id:req.body._id,
-            },{$push: {shopServices: {"serviceName":req.body.serviceName,"servicePrice":req.body.serviceCost}}},{new: false, upsert: true }).exec();
-            res.status(200).json({"message":"service Added"});
-        }
-        catch(err){
-            console.log(err);
-            res.status(404);
-        }
+     updateServices(req,res){
+        Shop.findOneAndUpdate(
+            { _id:req.body._id},
+            {$push: {
+                shopServices: {
+                    "serviceName":req.body.serviceName,
+                    "servicePrice":req.body.serviceCost
+                }
+            }},
+            {new: false, upsert: true })
+        .then( data => { return res.status(200).json({"Message":"service Added"}); })
+        .catch( err => { return res.status(404).json({"Message" : "Service Updation Failed"}); } )
     }
     
-    async addSlot(req,res){
+    addSlot(req,res){
         let id=req.body._id;
         let SlotId=req.body.slot;
-        console.log(req.body.slot);
-        try{
-            var slot=await Slot.findOne({shopId:id});
-            console.log(slot);
-            if(slot){
+        Slot.findOneAndUpdate(
+            {shopId: id}, 
+            {$push: {
+                slots: {
+                    "slotId":SlotId,
+                    "status":false
+                }
+            }},
+            {new: false, upsert: true }
+        ).then( data => {
+            return res.status(200).json({"Message":"Slot Added"});
+        })
+        .catch( err => {
+            let slotModel=new Slot({
+                shopId:id
+            })   
+            slotModel.save()
+            .then( data => { 
                 Slot.findOneAndUpdate(
-                    {shopId: id}, 
-                    {$push: {slots: {"slotId":SlotId,"status":false}}},{new: false, upsert: true }).exec();
-                    res.status(200).json({"message":"slot Added"});
-                    }
-            else{
-                var slotModel=new Slot({
-                    shopId:id
-                })
-                
-                slotModel.save();
-                
-                console.log(slotModel._id);
-                //const {name , id} = req.body
-                Slot.findOneAndUpdate(
-                    {shopId:id}, 
-                    {$push: {slots: {"slotId":SlotId,"status":false}}},{new: false, upsert: true }).exec();
-                    res.status(200).json({"message":"slot Added"});
-                    }
-                    console.log(slotModel);
-        }
-        catch(err){
-            res.status(404);
-        }
+                    {shopId:slotId}, 
+                    {$push: {
+                        slots: {
+                            "slotId":SlotId,
+                            "status":false
+                        }
+                    }},
+                    {new: false, upsert: true }
+                ).then( data => {
+                    return res.status(200).json({"Message":"Slot Added"});
+                })  
+            })
+            .catch( err => { return res.status(500).json({"Message" : "Operation Failed" });})
+        })
     }
 
-    async generateSlot(req,res){
-        console.log(req.body.date);
+    generateSlot(req,res){
         var date=req.body.date;
         var ShopId=req.body.shopId;
-        const slot=await Slot.findOne({
-            shopId:ShopId,
-        })
-        if(slot){
-            try{
-                var SA=new SlotAvailability({
-                    shopId:slot.shopId,
-                    date:date,
-                    slots:slot.slots,
-                })
-                SA.save();
-                res.status(200).json({"message":"slot Generated"});
-            }
-            catch{
-                res.status(404);
-            }
+        Slot.findOne({shopId:ShopId,})
+        .then( data => {
+            let slot = new SlotAvailability({
+                shopId:ShopId,
+                date:date,
+                slots:data.slots,
+            })
+            slot.save()
+            .then( data => { return res.status(200).json({"Message":"slot Generated"});})
             
-        }
+        })
+        .catch( err => { return res.status(500).json({"Message" : "Slot Generation Failed" + err});})
     }
     
     getBooking(req,res){
-        booking.find({},(err,result)=>{
-            if(err){
-                res.send(err)
-            }
-            res.send(result);
-        });
+        booking.find({})
+        .then( data => { return res.status(200).send(data); })
+        .catch( err => { return res.status(500).send(err.message); })
     }    
 }
 
